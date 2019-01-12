@@ -1,0 +1,140 @@
+<div fxLayoutAlign="center center" fxLayout="column">
+    <h1>Tumor Mutational Burden (TMB) Prediction</h1>
+
+    <!-- <div class="home__training">
+        <h3>Train Classification Model (Support Vector Machine)</h3> -->
+<!--         <md-card fxLayoutAlign="center center" fxLayout="column">
+            <h4>Set Parameter for Model Training</h4>
+            <md-input-container>
+                <input
+                    mdInput
+                    name="C Parameter"
+                    placeholder="C Parameter"
+                    [(ngModel)]="svcParameters.C">
+            </md-input-container>
+            <button md-raised-button (click)="trainModel()">
+                Train model
+            </button>
+        </md-card> -->
+
+<!--         <div *ngIf="svcResult"
+             fxLayoutAlign="center center"
+             fxLayout="column">
+            <h4>Training Accuracy</h4>
+            <ngx-charts-linear-gauge
+                [view]="[300, 100]"
+                [value]="svcResult.accuracy"
+                [scheme]="colorScheme"
+                [min]="0"
+                [max]="100"
+                [units]="'% accuracy'">
+            </ngx-charts-linear-gauge>
+        </div>
+    </div> -->
+
+    <div class="home__prediction"
+         fxLayoutAlign="center center"
+         fxLayout="column">
+        <!-- <h3>Predict TMB</h3> -->
+
+        <md-card fxLayoutAlign="center center" fxLayout="column">
+            <h4>Please enter the number of mutations:</h4>
+            <div fxLayout="row">
+                <md-input-container>
+                    <input mdInput
+                           name="TTN"
+                           placeholder="TTN"
+                           [(ngModel)]="mp.nmut_TTN">
+                </md-input-container>
+                <md-input-container>
+                    <input mdInput
+                           name="LRP1B"
+                           placeholder="LRP1B"
+                           [(ngModel)]="mp.nmut_LRP1B">
+                </md-input-container>
+                <md-input-container>
+                    <input mdInput
+                           name="CSMD3"
+                           placeholder="CSMD3"
+                           [(ngModel)]="mp.nmut_CSMD3">
+                </md-input-container>
+            </div>
+            <div fxLayout="row">
+                <md-input-container>
+                    <input mdInput
+                           name="PAPPA2"
+                           placeholder="PAPPA2"
+                           [(ngModel)]="mp.nmut_PAPPA2">
+                </md-input-container>
+                <md-input-container>
+                    <input mdInput
+                           name="TP53"
+                           placeholder="TP53"
+                           [(ngModel)]="mp.nmut_TP53">
+                </md-input-container>
+                <md-input-container>
+                    <input mdInput
+                           name="EGFR"
+                           placeholder="EGFR"
+                           [(ngModel)]="mp.nmut_EGFR">
+                </md-input-container>
+            </div>
+            <div fxLayout="row">
+                <md-input-container>
+                    <input mdInput
+                           name="KRAS"
+                           placeholder="KRAS"
+                           [(ngModel)]="mp.nmut_KRAS">
+                </md-input-container>
+                <md-input-container>
+                    <input mdInput
+                           name="EGFR exons 18-21"
+                           placeholder="EGFR exons 18-21"
+                           [(ngModel)]="mp.nmut_EGFR_exons18to21">
+                </md-input-container>
+                <md-input-container>
+                    <input mdInput
+                           name="KRAS hotspots"
+                           placeholder="KRAS hotspots"
+                           [(ngModel)]="mp.nmut_KRAS_hotspots">
+                </md-input-container>
+            </div>
+            <div>
+                <button md-raised-button (click)="predictTMB()">Predict TMB</button>
+            </div>
+        </md-card>
+
+<!--         <div *ngIf="probabilityPredictions"
+             fxLayoutAlign="center center"
+             fxLayout="column">
+            <h4>Predicted TMB</h4>
+            <ngx-charts-linear-gauge
+                [view]="[300, 100]"
+                [value]="'999'"
+                [scheme]="colorScheme"
+                [min]="0"
+                [units]="'megabases'">
+            </ngx-charts-linear-gauge>
+        </div> -->
+
+        <div *ngIf="probabilityPredictions"
+             fxLayoutAlign="center center"
+             fxLayout="column"
+             class="home__chart-container">
+            <h4>Prediction Result</h4>
+            <ngx-charts-bar-vertical
+                [results]="probabilityPredictions"
+                [xAxis]="true"
+                [yAxis]="true"
+                [xAxisLabel]="'TMB Class'"
+                [yAxisLabel]="'Probability'"
+                [showXAxisLabel]="true"
+                [showYAxisLabel]="true"
+                [scheme]="colorScheme"
+                [legend]="false"
+                [view]="[500,200]"
+                [yScaleMax]="100">
+            </ngx-charts-bar-vertical>
+        </div>
+    </div>
+</div>
