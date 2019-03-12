@@ -15,14 +15,8 @@ export class ProbabilityPrediction {
     value: number;
 }
 
-export class SVCParameters {
-    C: number = 2.0;
+export class RegressionPrediction {
+    name: string;
+    value: number;
 }
 
-export class SVCResult {
-    accuracy: number;
-}
-
-export class CountPrediction {
-    count: number;
-}

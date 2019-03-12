@@ -2,6 +2,9 @@ from flask import Flask, request, jsonify
 from sklearn import svm
 from sklearn import datasets
 from sklearn.externals import joblib
+# import xgboost
+# from xgboost import XGBClassifier
+# from xgboost import XGBRegressor
 
 # declare constants
 HOST = '0.0.0.0'
@@ -47,6 +50,25 @@ def predict():
     return jsonify([{'name': 'Low', 'value': round(probabilities[0, 0] * 100, 2)},
                     {'name': 'High', 'value': round(probabilities[0, 1] * 100, 2)},])
 
+@app.route('/api/predict_regression', methods=['POST'])
+def predict_regression():
+    X = request.get_json()
+    X = [[float(X['nmut_TTN']), float(X['nmut_LRP1B']), float(X['nmut_CSMD3']), float(X['nmut_PAPPA2']),
+    float(X['nmut_TP53']), float(X['nmut_EGFR']), float(X['nmut_KRAS']), float(X['nmut_EGFR_exons18to21']),
+    float(X['nmut_KRAS_hotspots'])]]
+    # read model
+    reg = joblib.load('tmb-model-cont.pkl')
+    # (mzomnir) need to convert the above array X to a form ingestible by the classifier
+    prediction = reg.predict(X)
+    # Convert the predicted number of mutations into Mutations per MB
+    
+    mut_per_mb = prediction[0] / 35.0
+
+    # No negative mut_per_mb values allowed
+    if mut_per_mb < 0:
+        mut_per_mb = 0
+
+    return jsonify([{'name': 'Mutations per MB', 'value': round(mut_per_mb, 1)}])
 
 if __name__ == '__main__':
     # run web server

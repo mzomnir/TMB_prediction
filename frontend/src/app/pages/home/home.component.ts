@@ -3,8 +3,7 @@ import {TMBService} from "./iris.service";
 import {
     MutationProfile,
     ProbabilityPrediction,
-    SVCParameters,
-    SVCResult
+    RegressionPrediction
 } from "./types";
 
 @Component({
@@ -14,10 +13,9 @@ import {
 })
 export class HomeComponent implements OnInit {
 
-    public svcParameters: SVCParameters = new SVCParameters();
-    public svcResult: SVCResult;
     public mp: MutationProfile = new MutationProfile();
     public probabilityPredictions: ProbabilityPrediction[];
+    public regressionPredictions: RegressionPrediction[];
 
     // graph styling
     public colorScheme = {
@@ -30,16 +28,16 @@ export class HomeComponent implements OnInit {
     ngOnInit() {
     }
 
-    public trainModel() {
-        this.tmbService.trainModel(this.svcParameters).subscribe((svcResult) => {
-            this.svcResult = svcResult;
-        });
-    }
-
     public predictTMB() {
         this.tmbService.predictTMB(this.mp).subscribe((probabilityPredictions) => {
             this.probabilityPredictions = probabilityPredictions;
         });
+    }
+
+    public predictMutPerMB() {
+	this.tmbService.predictMutPerMB(this.mp).subscribe((regressionPredictions) => {
+	    this.regressionPredictions = regressionPredictions;
+	});
     }
 
 }

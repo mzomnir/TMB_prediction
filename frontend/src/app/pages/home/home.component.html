@@ -1,36 +1,5 @@
 <div fxLayoutAlign="center center" fxLayout="column">
-    <h1>Tumor Mutational Burden (TMB) Prediction</h1>
-
-    <!-- <div class="home__training">
-        <h3>Train Classification Model (Support Vector Machine)</h3> -->
-<!--         <md-card fxLayoutAlign="center center" fxLayout="column">
-            <h4>Set Parameter for Model Training</h4>
-            <md-input-container>
-                <input
-                    mdInput
-                    name="C Parameter"
-                    placeholder="C Parameter"
-                    [(ngModel)]="svcParameters.C">
-            </md-input-container>
-            <button md-raised-button (click)="trainModel()">
-                Train model
-            </button>
-        </md-card> -->
-
-<!--         <div *ngIf="svcResult"
-             fxLayoutAlign="center center"
-             fxLayout="column">
-            <h4>Training Accuracy</h4>
-            <ngx-charts-linear-gauge
-                [view]="[300, 100]"
-                [value]="svcResult.accuracy"
-                [scheme]="colorScheme"
-                [min]="0"
-                [max]="100"
-                [units]="'% accuracy'">
-            </ngx-charts-linear-gauge>
-        </div>
-    </div> -->
+    <h1>Tumor Mutational Burden Prediction</h1>
 
     <div class="home__prediction"
          fxLayoutAlign="center center"
@@ -100,7 +69,8 @@
                 </md-input-container>
             </div>
             <div>
-                <button md-raised-button (click)="predictTMB()">Predict TMB</button>
+                <button md-raised-button (click)="predictTMB()">Predict Binary TMB</button>
+                <button md-raised-button (click)="predictMutPerMB()">Predict Mutations per MB</button>
             </div>
         </md-card>
 
@@ -117,11 +87,12 @@
             </ngx-charts-linear-gauge>
         </div> -->
 
-        <div *ngIf="probabilityPredictions"
+
+          <div *ngIf="probabilityPredictions"
              fxLayoutAlign="center center"
              fxLayout="column"
              class="home__chart-container">
-            <h4>Prediction Result</h4>
+            <h4>TMB Binary Probability Prediction</h4>
             <ngx-charts-bar-vertical
                 [results]="probabilityPredictions"
                 [xAxis]="true"
@@ -135,6 +106,18 @@
                 [view]="[500,200]"
                 [yScaleMax]="100">
             </ngx-charts-bar-vertical>
-        </div>
+          </div>
+
+          <div *ngIf="regressionPredictions"
+             fxLayoutAlign="center center"
+             fxLayout="column"
+             class="home__chart-container">
+            <h4>Mutations per MB Prediction</h4>
+            <ngx-charts-number-card
+                [results] = "regressionPredictions"
+                [view]="[300,100]">
+            </ngx-charts-number-card>
+          </div>
+
     </div>
 </div>
